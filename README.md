@@ -41,11 +41,11 @@ This project is suitable for:
 ## ⚙️ Installation
 
 ### Linux / Termux
-pkg install python git -y 
-pip install requests 
-git clone https://github.com/hussaini021/Check_vpn.git�
-cd Check_vpn 
-python vpn2.py
+- pkg install python git -y
+- pip install requests 
+- git clone https://github.com/hussaini021/Check_vpn
+- cd Check_vpn 
+- python vpn2.py
 
 ---
 
