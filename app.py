@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PYTHON = sys.executable
-RUN_FILE = os.path.join(BASE_DIR, "run.py")
+RUN_FILE = os.path.join(BASE_DIR, "run_engine.py")
 
 analysis_output = "No analysis started yet"
 analysis_status = "idle"
