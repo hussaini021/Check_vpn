@@ -6,7 +6,7 @@ import sys
 app = Flask(__name__)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-PYTHON = sys.executable   # ← خیلی مهم
+PYTHON = sys.executable
 RUN_FILE = os.path.join(BASE_DIR, "run.py")
 
 @app.route("/")
@@ -18,7 +18,7 @@ def analyze():
     try:
         process = subprocess.Popen(
             [PYTHON, RUN_FILE],
-            cwd=BASE_DIR,              # ← خیلی مهم
+            cwd=BASE_DIR,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True
@@ -47,9 +47,4 @@ def analyze():
         return jsonify({
             "status": "failed",
             "output": str(e)
-        })            "status": "failed",
-            "output": str(e)
         })
-
-if __name__ == "__main__":
-    app.run()
