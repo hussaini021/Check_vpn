@@ -1,7 +1,7 @@
 import os
 import vpn2
+import os
 import sys
-import time
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 os.chdir(BASE_DIR)
@@ -9,37 +9,25 @@ os.chdir(BASE_DIR)
 try:
     import vpn2
 except Exception as e:
-    print("FAILED TO LOAD CYTHON MODULE:")
+    print("FAILED TO LOAD VPN ENGINE")
     print(e)
     sys.exit(1)
 
 
-def safe_run(func, name):
-    try:
-        return func()
-    except Exception as e:
-        return f"{name} FAILED: {e}"
-
-
 def main():
-    print("=== VPN GUARD PRO ANALYSIS ===\n")
-
-    start = time.time()
+    print("=== VPN GUARD PRO ANALYSIS ===")
 
     if hasattr(vpn2, "check_dns"):
-        print(safe_run(vpn2.check_dns, "DNS CHECK"))
+        print(vpn2.check_dns())
 
     if hasattr(vpn2, "check_webrtc"):
-        print(safe_run(vpn2.check_webrtc, "WEBRTC CHECK"))
+        print(vpn2.check_webrtc())
 
     if hasattr(vpn2, "check_proxy"):
-        print(safe_run(vpn2.check_proxy, "PROXY CHECK"))
+        print(vpn2.check_proxy())
 
     if hasattr(vpn2, "risk_score"):
-        print("RISK SCORE:", safe_run(vpn2.risk_score, "RISK SCORE"))
-
-    elapsed = round(time.time() - start, 2)
-    print(f"\nAnalysis finished in {elapsed}s")
+        print("RISK SCORE:", vpn2.risk_score())
 
 
 if __name__ == "__main__":
