@@ -1,29 +1,42 @@
 from flask import Flask, jsonify, render_template
-import requests
+import subprocess
+import os
 
 app = Flask(__name__)
 
-IP_API = "https://api.ipify.org"
-IP_INFO_API = "http://ip-api.com/json/"
-
-def get_ip_info():
-    ip = requests.get(IP_API, timeout=5).text.strip()
-    info = requests.get(IP_INFO_API + ip, timeout=5).json()
-    return {
-        "country": info.get("country"),
-        "isp": info.get("isp")
-    }
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+RUN_FILE = os.path.join(BASE_DIR, "run")
 
 @app.route("/")
 def home():
     return render_template("index.html")
 
-@app.route("/check-ip")
-def check_ip():
-    return jsonify(get_ip_info())
-
 @app.route("/analyze")
 def analyze():
-    data = get_ip_info()
-    data["status"] = "VPN analysis completed"
-    return jsonify(data)
+    try:
+        result = subprocess.run(
+            [RUN_FILE],
+            capture_output=True,
+            text=True,
+            timeout=30
+        )
+
+        if result.stderr:
+            return jsonify({
+                "status": "error",
+                "output": result.stderr
+            })
+
+        return jsonify({
+            "status": "success",
+            "output": result.stdout
+        })
+
+    except Exception as e:
+        return jsonify({
+            "status": "failed",
+            "output": str(e)
+        })
+
+if __name__ == "__main__":
+    app.run()
