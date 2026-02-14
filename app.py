@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 import requests
 
 app = Flask(__name__)
@@ -16,7 +16,7 @@ def get_ip_info():
 
 @app.route("/")
 def home():
-    return "VPN Guard Pro Backend is running"
+    return render_template("index.html")
 
 @app.route("/check-ip")
 def check_ip():
