@@ -14,14 +14,9 @@ body {
   padding: 20px;
 }
 
-h2 {
-  text-align: center;
-}
-
 button {
   width: 100%;
   padding: 15px;
-  margin: 10px 0;
   font-size: 16px;
   background: #22c55e;
   border: none;
@@ -34,7 +29,7 @@ pre {
   padding: 15px;
   border-radius: 10px;
   white-space: pre-wrap;
-  min-height: 200px;
+  min-height: 220px;
 }
 </style>
 </head>
@@ -43,4 +38,29 @@ pre {
 
 <h2>🔐 VPN Guard Pro</h2>
 
-<button onclick="startAnalysis()">Start Full VPN Analysis
+<button onclick="startAnalysis()">Start Full VPN Analysis</button>
+
+<pre id="output">Ready</pre>
+
+<script>
+const API = window.location.origin;
+
+function startAnalysis() {
+  document.getElementById("output").innerText =
+    "Running analysis...\nPlease wait ⏳";
+
+  fetch(API + "/analyze")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("output").innerText =
+        data.output || "No output";
+    })
+    .catch(() => {
+      document.getElementById("output").innerText =
+        "Connection error ❌";
+    });
+}
+</script>
+
+</body>
+</html>
