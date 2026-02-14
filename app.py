@@ -15,6 +15,13 @@ def home():
 
 @app.route("/analyze")
 def analyze():
+
+    if not os.path.exists(RUN_FILE):
+        return jsonify({
+            "status": "failed",
+            "output": "run.py not found"
+        })
+
     try:
         process = subprocess.Popen(
             [PYTHON, RUN_FILE],
@@ -24,9 +31,9 @@ def analyze():
             text=True
         )
 
-        stdout, stderr = process.communicate(timeout=60)
+        stdout, stderr = process.communicate(timeout=30)
 
-        if stderr:
+        if stderr.strip():
             return jsonify({
                 "status": "error",
                 "output": stderr
@@ -38,9 +45,10 @@ def analyze():
         })
 
     except subprocess.TimeoutExpired:
+        process.kill()
         return jsonify({
             "status": "timeout",
-            "output": "Analysis took too long"
+            "output": "Analysis timeout (cloud environment limitation)"
         })
 
     except Exception as e:
@@ -48,3 +56,6 @@ def analyze():
             "status": "failed",
             "output": str(e)
         })
+
+if __name__ == "__main__":
+    app.run()
