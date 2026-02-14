@@ -1,40 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>VPN Guard Pro</title>
+<button onclick="start()">Start Full VPN Analysis</button>
+<pre id="output">Idle</pre>
 
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+const API = window.location.origin;
 
-<style>
-body {
-  background: #0f172a;
-  color: #e5e7eb;
-  font-family: monospace;
-  padding: 20px;
+function start() {
+  fetch(API + "/start")
+    .then(() => poll());
 }
 
-button {
-  width: 100%;
-  padding: 15px;
-  font-size: 16px;
-  background: #22c55e;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
+function poll() {
+  fetch(API + "/result")
+    .then(r => r.json())
+    .then(data => {
+      document.getElementById("output").innerText =
+        data.status + "\n\n" + data.output;
 
-pre {
-  background: #020617;
-  padding: 15px;
-  border-radius: 10px;
-  white-space: pre-wrap;
-  min-height: 220px;
+      if (data.status === "running") {
+        setTimeout(poll, 2000);
+      }
+    });
 }
-</style>
-</head>
-
-<body>
+</script><body>
 
 <h2>🔐 VPN Guard Pro</h2>
 
