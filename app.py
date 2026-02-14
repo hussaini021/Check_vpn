@@ -48,7 +48,7 @@ def analyze():
         process.kill()
         return jsonify({
             "status": "timeout",
-            "output": "Analysis timeout (cloud environment limitation)"
+            "output": "Analysis timeout (cloud limitation)"
         })
 
     except Exception as e:
@@ -56,6 +56,3 @@ def analyze():
             "status": "failed",
             "output": str(e)
         })
-
-if __name__ == "__main__":
-    app.run()
