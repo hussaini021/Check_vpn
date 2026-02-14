@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>VPN Guard Pro</title>
+
+<!-- Telegram Web App -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+body {
+  background: #0f172a;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+button {
+  width: 90%;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  background: #22c55e;
+  color: #000;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #16a34a;
+}
+
+pre {
+  background: #020617;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: left;
+  white-space: pre-wrap;
+}
+</style>
+</head>
+
+<body>
+
+<h2>🔐 VPN Guard Pro</h2>
+
+<button onclick="checkIP()">Check IP</button>
+<button onclick="startAnalysis()">Start VPN Analysis</button>
+
+<pre id="output">Ready</pre>
+
+<script>
+const API = window.location.origin;
+
+function checkIP() {
+  fetch(API + "/check-ip")
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("output").innerText =
+        "Country: " + data.country + "\n" +
+        "ISP: " + data.isp;
+    })
+    .catch(err => {
+      document.getElementById("output").innerText = "Error connecting to server";
+    });
+}
+
+function startAnalysis() {
+  fetch(API + "/analyze")
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("output").innerText =
+        data.status + "\n\n" +
+        "Country: " + data.country + "\n" +
+        "ISP: " + data.isp;
+    })
+    .catch(err => {
+      document.getElementById("output").innerText = "Error during analysis";
+    });
+}
+</script>
+
+</body>
+</html>
