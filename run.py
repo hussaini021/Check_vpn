@@ -2,7 +2,6 @@ import os
 import vpn2
 import os
 import sys
-git pull
 
 import os
 import sys
