@@ -34,7 +34,7 @@ This project is suitable for:
 
 ## 🖥️ Screenshot
 
-![VPN Guard Pro](screenshots/menu.png)
+![VPN Guard Pro](https://github.com/hussaini021/Check_vpn/blob/main/menu.png)
 
 ---
 
