@@ -45,7 +45,7 @@ This project is suitable for:
 - pip install requests 
 - git clone https://github.com/hussaini021/Check_vpn
 - cd Check_vpn 
-- python vpn2.py
+- python run.py
 
 ---
 
